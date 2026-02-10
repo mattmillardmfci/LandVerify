@@ -73,7 +73,9 @@ service cloud.firestore {
 ## Data Collections
 
 ### `queries` Collection
+
 Stores all parcel queries:
+
 - `lat` - Latitude
 - `lng` - Longitude
 - `address` - Address searched (if applicable)
@@ -83,7 +85,9 @@ Stores all parcel queries:
 - `userAgent` - Browser info
 
 ### `geolocations` Collection
+
 Stores all geolocation accesses:
+
 - `latitude` - Latitude
 - `longitude` - Longitude
 - `accuracy` - Accuracy in meters
@@ -116,6 +120,7 @@ When deploying to Vercel:
 ## Security Notes
 
 ⚠️ **Important**: The current admin panel uses a simple password. For production:
+
 - Implement proper authentication (Firebase Auth)
 - Use email/password or OAuth
 - Restrict access to admins only

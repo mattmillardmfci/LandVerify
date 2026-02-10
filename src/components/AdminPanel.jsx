@@ -66,8 +66,7 @@ export default function AdminPanel() {
 		return (
 			<button
 				onClick={() => setAdminOpen(true)}
-				className="fixed bottom-4 right-4 bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 rounded text-xs font-mono z-50 transition"
-			>
+				className="fixed bottom-4 right-4 bg-gray-800 hover:bg-gray-700 text-white px-3 py-2 rounded text-xs font-mono z-50 transition">
 				Admin
 			</button>
 		);
@@ -83,8 +82,7 @@ export default function AdminPanel() {
 						setAdminOpen(false);
 						setAuthenticated(false);
 					}}
-					className="text-gray-400 hover:text-white text-xl"
-				>
+					className="text-gray-400 hover:text-white text-xl">
 					×
 				</button>
 			</div>
@@ -103,8 +101,7 @@ export default function AdminPanel() {
 						/>
 						<button
 							type="submit"
-							className="w-full bg-neon-green text-black font-bold py-2 rounded hover:bg-green-400 transition"
-						>
+							className="w-full bg-neon-green text-black font-bold py-2 rounded hover:bg-green-400 transition">
 							Login
 						</button>
 					</form>
@@ -118,8 +115,7 @@ export default function AdminPanel() {
 									tab === "queries"
 										? "text-neon-green border-b-2 border-neon-green"
 										: "text-gray-400 hover:text-gray-200"
-								}`}
-							>
+								}`}>
 								Queries ({queries.length})
 							</button>
 							<button
@@ -128,15 +124,13 @@ export default function AdminPanel() {
 									tab === "geolocations"
 										? "text-neon-green border-b-2 border-neon-green"
 										: "text-gray-400 hover:text-gray-200"
-								}`}
-							>
+								}`}>
 								Geolocations ({geolocations.length})
 							</button>
 							<button
 								onClick={loadData}
 								disabled={loading}
-								className="px-3 py-2 text-sm text-gray-400 hover:text-gray-200 disabled:opacity-50"
-							>
+								className="px-3 py-2 text-sm text-gray-400 hover:text-gray-200 disabled:opacity-50">
 								{loading ? "..." : "Refresh"}
 							</button>
 						</div>
@@ -148,17 +142,10 @@ export default function AdminPanel() {
 									<p className="text-gray-500 text-xs">No queries yet</p>
 								) : (
 									queries.map((q) => (
-										<div
-											key={q.id}
-											className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1"
-										>
+										<div key={q.id} className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1">
 											<div className="flex justify-between">
-												<span className="text-neon-green font-mono">
-													{q.result?.owner || "Unknown"}
-												</span>
-												<span className="text-gray-500">
-													{q.timestamp?.toLocaleTimeString() || ""}
-												</span>
+												<span className="text-neon-green font-mono">{q.result?.owner || "Unknown"}</span>
+												<span className="text-gray-500">{q.timestamp?.toLocaleTimeString() || ""}</span>
 											</div>
 											<div className="text-gray-400">
 												{q.address ? `📍 ${q.address}` : `🗺️ ${q.lng?.toFixed(4)}, ${q.lat?.toFixed(4)}`}
@@ -179,21 +166,14 @@ export default function AdminPanel() {
 									<p className="text-gray-500 text-xs">No geolocation data yet</p>
 								) : (
 									geolocations.map((g) => (
-										<div
-											key={g.id}
-											className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1"
-										>
+										<div key={g.id} className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1">
 											<div className="flex justify-between">
 												<span className="text-neon-green font-mono">
 													{g.latitude?.toFixed(4)}, {g.longitude?.toFixed(4)}
 												</span>
-												<span className="text-gray-500">
-													{g.timestamp?.toLocaleTimeString() || ""}
-												</span>
+												<span className="text-gray-500">{g.timestamp?.toLocaleTimeString() || ""}</span>
 											</div>
-											<div className="text-gray-500">
-												Accuracy: ±{g.accuracy?.toFixed(0) || "N/A"} m
-											</div>
+											<div className="text-gray-500">Accuracy: ±{g.accuracy?.toFixed(0) || "N/A"} m</div>
 										</div>
 									))
 								)}
@@ -203,8 +183,7 @@ export default function AdminPanel() {
 						{/* Logout */}
 						<button
 							onClick={() => setAuthenticated(false)}
-							className="w-full text-xs text-gray-400 hover:text-gray-200 py-2 border-t border-gray-700 transition"
-						>
+							className="w-full text-xs text-gray-400 hover:text-gray-200 py-2 border-t border-gray-700 transition">
 							Logout
 						</button>
 					</div>

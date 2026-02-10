@@ -35,13 +35,30 @@ Missouri land owner verification platform built with React, Vite, and Mapbox GL 
 
 ### Development
 
-Run the development server:
+Run the full development environment (frontend + backend API):
 
 ```bash
-npm run dev
+npm run dev:full
 ```
 
-The app will be available at `http://localhost:3000`
+This will start:
+- **Vite dev server** at `http://localhost:3000`
+- **Express API server** at `http://localhost:3001`
+
+You can also run them separately:
+
+```bash
+# Frontend only
+npm run dev
+
+# API server only
+npm run dev:api
+```
+
+The Express API server provides:
+- Mock parcel data fallback when ArcGIS is unavailable
+- Parcel boundary generation for the map viewport
+- CORS proxy for ArcGIS requests
 
 ### Building for Production
 
@@ -72,43 +89,59 @@ npm run build
 ```
 LandVerify/
 ├── api/                      # Vercel Serverless Functions
-│   └── enformion.js         # Enformion API proxy
-├── public/
-│   └── data/
-│       └── missouri_parcels.json  # Missouri parcel GeoJSON data
+│   ├── arcgis.js            # ArcGIS API proxy with mock fallback
+│   ├── enformion.js         # Enformion API proxy
+│   └── parcels-bounds.js    # Parcel boundary generation for viewport
 ├── src/
 │   ├── components/          # React components
+│   │   ├── AdminPanel.jsx   # Password-protected admin dashboard
 │   │   ├── ContactCard.jsx  # Landowner contact modal
 │   │   └── VerifiedBadge.jsx # Verified status badge
+│   ├── config/
+│   │   └── firebase.js      # Firebase initialization
 │   ├── hooks/               # Custom React hooks
 │   │   └── useMissouriParcels.js  # Parcel data management
 │   ├── services/            # API services
-│   │   └── enformionService.js    # Enformion API client
+│   │   ├── arcgisService.js      # ArcGIS API client
+│   │   ├── enformionService.js   # Enformion API client
+│   │   ├── geocodingService.js   # Mapbox Geocoding API
+│   │   └── queryLogger.js        # Firebase logging service
 │   ├── App.jsx              # Main application
 │   ├── main.jsx             # Entry point
-│   └── index.css            # Global styles
+│   └── index.css            # Global styles (Tailwind)
+├── server.js                # Local Express API server (development)
+├── .env                     # Environment variables
 ├── .env.example             # Environment variables template
-├── vercel.json              # Vercel configuration
+├── FIREBASE_SETUP.md        # Firebase setup instructions
 └── package.json             # Dependencies and scripts
 ```
 
 ## Features
 
 - 🗺️ Interactive Mapbox map centered on Missouri
-- 📍 Click parcels to view owner information
+- 🏘️ **Always-visible parcel boundaries** across the entire map viewport
+- 📍 Click parcels to view detailed owner information
+- 🔍 Address search with autocomplete (powered by Mapbox Geocoding)
+- 📍 Auto-zoom to user's geolocation on load
 - 🔓 Unlock verified contact data (phone, email, address)
 - ✅ Verified badge for confirmed data
+- 🔥 Firebase Firestore integration for query logging
+- 🔐 Admin panel with password protection to view all queries
 - 🔒 Secure API key management with Vercel Serverless Functions
 - 💎 Glassmorphism UI design
-- 🟢 Neon green parcel highlighting
+- 🟢 Neon green (#39FF14) parcel highlighting
 
 ## Tech Stack
 
-- **Frontend**: React 18 + Vite
-- **Styling**: Tailwind CSS
-- **Mapping**: Mapbox GL JS + react-map-gl
-- **Deployment**: Vercel
-- **APIs**: Enformion (Direct Owner Search)
+- **Frontend**: React 18 + Vite 5
+- **Styling**: Tailwind CSS 3.4
+- **Mapping**: Mapbox GL JS 3.1 + react-map-gl 7.1
+- **Backend**: Express 4.18 (local) + Vercel Serverless Functions (production)
+- **Database**: Firebase Firestore (query logging)
+- **APIs**: 
+  - Boone County ArcGIS REST API (parcel data)
+  - Mapbox Geocoding API (address search)
+  - Enformion API (contact data - planned)
 
 ## License
 

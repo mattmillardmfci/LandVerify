@@ -140,6 +140,54 @@ app.post("/api/arcgis", async (req, res) => {
 	}
 });
 
+// Get all parcels in viewport (for displaying parcel boundaries)
+app.post("/api/parcels/bounds", async (req, res) => {
+	const { bounds } = req.body; // [[west, south], [east, north]]
+	console.log("[API] Getting parcels for bounds:", bounds);
+
+	// Generate a grid of parcels across the bounds
+	const parcels = [];
+	const [west, south] = bounds[0];
+	const [east, north] = bounds[1];
+
+	// Create a grid of parcels (e.g., 0.01 degree spacing)
+	const spacing = 0.008; // approximately 500m
+	for (let lng = west; lng < east; lng += spacing) {
+		for (let lat = south; lat < north; lat += spacing) {
+			const mockParcel = MOCK_PARCELS[Math.floor(Math.random() * MOCK_PARCELS.length)];
+			parcels.push({
+				type: "Feature",
+				properties: {
+					OBJECTID: Math.floor(Math.random() * 999999),
+					OWNER: mockParcel.owner,
+					ACRES_CALC: mockParcel.acres,
+					PARCEL_ID: `${mockParcel.parcelId}-${Math.floor(lng * 1000)}-${Math.floor(lat * 1000)}`,
+				},
+				geometry: {
+					type: "Polygon",
+					coordinates: [
+						[
+							[lng, lat],
+							[lng + spacing, lat],
+							[lng + spacing, lat + spacing],
+							[lng, lat + spacing],
+							[lng, lat],
+						],
+					],
+				},
+			});
+		}
+	}
+
+	const geoJson = {
+		type: "FeatureCollection",
+		features: parcels,
+	};
+
+	console.log(`[API] Generated ${parcels.length} parcels for viewport`);
+	res.json(geoJson);
+});
+
 app.listen(PORT, () => {
 	console.log(`🚀 Local API server running on http://localhost:${PORT}`);
 	console.log(`   Proxying to Boone County ArcGIS service`);
