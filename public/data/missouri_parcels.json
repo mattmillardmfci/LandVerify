@@ -1,0 +1,51 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"type": "Feature",
+			"id": "sample-parcel-001",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[-92.1735, 38.5767],
+						[-92.1635, 38.5767],
+						[-92.1635, 38.5867],
+						[-92.1735, 38.5867],
+						[-92.1735, 38.5767]
+					]
+				]
+			},
+			"properties": {
+				"PARCEL_ID": "SAMPLE-001",
+				"OWNER_NAME": "John Smith",
+				"COUNTY": "Cole County",
+				"ACRES": 40.5,
+				"selected": false
+			}
+		},
+		{
+			"type": "Feature",
+			"id": "sample-parcel-002",
+			"geometry": {
+				"type": "Polygon",
+				"coordinates": [
+					[
+						[-92.1635, 38.5767],
+						[-92.1535, 38.5767],
+						[-92.1535, 38.5867],
+						[-92.1635, 38.5867],
+						[-92.1635, 38.5767]
+					]
+				]
+			},
+			"properties": {
+				"PARCEL_ID": "SAMPLE-002",
+				"OWNER_NAME": "Mary Johnson",
+				"COUNTY": "Cole County",
+				"ACRES": 35.2,
+				"selected": false
+			}
+		}
+	]
+}
