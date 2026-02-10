@@ -158,7 +158,7 @@ function App() {
 				maxBounds={MISSOURI_BOUNDS}
 				minZoom={6}
 				maxZoom={18}
-				cursor={isLoading ? "wait" : "crosshair"}>
+				cursor="crosshair">
 				{parcels && parcels.features && parcels.features.length > 0 && (
 					<Source id="parcels" type="geojson" data={parcels}>
 						<Layer
