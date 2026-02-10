@@ -106,7 +106,7 @@ export default function AdminPanel({ onLocationClick }) {
 						</button>
 					</form>
 				) : (
-					<div>
+					<>
 						{/* Tabs */}
 						<div className="flex gap-2 border-b border-gray-700 mb-4">
 							<button
@@ -192,7 +192,7 @@ export default function AdminPanel({ onLocationClick }) {
 							className="w-full text-xs text-gray-400 hover:text-gray-200 py-2 border-t border-gray-700 transition">
 							Logout
 						</button>
-					</div>
+					</>
 				)}
 			</div>
 		</div>
