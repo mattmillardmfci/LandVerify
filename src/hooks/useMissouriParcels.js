@@ -21,15 +21,12 @@ const useMissouriParcels = () => {
 	 * DISABLED: Causes performance issues with mock data
 	 * TODO: Re-enable when real parcel data source is available
 	 */
-	const loadParcelsForBounds = useCallback(
-		async (map) => {
-			// DISABLED - viewport loading causes too many parcels and crashes
-			// Need real parcel data source before re-enabling
-			console.log("[Hook] Viewport parcel loading disabled - click parcels to view");
-			return;
-		},
-		[],
-	);
+	const loadParcelsForBounds = useCallback(async (map) => {
+		// DISABLED - viewport loading causes too many parcels and crashes
+		// Need real parcel data source before re-enabling
+		console.log("[Hook] Viewport parcel loading disabled - click parcels to view");
+		return;
+	}, []);
 
 	/**
 	 * Handle map click to fetch parcel data from ArcGIS API

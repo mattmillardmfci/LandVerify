@@ -7,7 +7,7 @@ import React, { useState, useEffect } from "react";
 import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
 import { db } from "../config/firebase";
 
-export default function AdminPanel() {
+export default function AdminPanel({ onLocationClick }) {
 	const [adminOpen, setAdminOpen] = useState(false);
 	const [password, setPassword] = useState("");
 	const [authenticated, setAuthenticated] = useState(false);
@@ -142,7 +142,10 @@ export default function AdminPanel() {
 									<p className="text-gray-500 text-xs">No queries yet</p>
 								) : (
 									queries.map((q) => (
-										<div key={q.id} className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1">
+										<div
+											key={q.id}
+											onClick={() => onLocationClick && onLocationClick(q.lat, q.lng, 18)}
+											className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1 cursor-pointer hover:bg-gray-700 hover:border-neon-green transition">
 											<div className="flex justify-between">
 												<span className="text-neon-green font-mono">{q.result?.owner || "Unknown"}</span>
 												<span className="text-gray-500">{q.timestamp?.toLocaleTimeString() || ""}</span>
@@ -166,7 +169,10 @@ export default function AdminPanel() {
 									<p className="text-gray-500 text-xs">No geolocation data yet</p>
 								) : (
 									geolocations.map((g) => (
-										<div key={g.id} className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1">
+										<div
+											key={g.id}
+											onClick={() => onLocationClick && onLocationClick(g.latitude, g.longitude, 18)}
+											className="bg-gray-800 border border-gray-700 rounded p-2 text-xs space-y-1 cursor-pointer hover:bg-gray-700 hover:border-neon-green transition">
 											<div className="flex justify-between">
 												<span className="text-neon-green font-mono">
 													{g.latitude?.toFixed(4)}, {g.longitude?.toFixed(4)}

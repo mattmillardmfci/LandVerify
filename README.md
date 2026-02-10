@@ -42,6 +42,7 @@ npm run dev:full
 ```
 
 This will start:
+
 - **Vite dev server** at `http://localhost:3000`
 - **Express API server** at `http://localhost:3001`
 
@@ -56,6 +57,7 @@ npm run dev:api
 ```
 
 The Express API server provides:
+
 - Mock parcel data fallback when ArcGIS is unavailable
 - Parcel boundary generation for the map viewport
 - CORS proxy for ArcGIS requests
@@ -138,7 +140,7 @@ LandVerify/
 - **Mapping**: Mapbox GL JS 3.1 + react-map-gl 7.1
 - **Backend**: Express 4.18 (local) + Vercel Serverless Functions (production)
 - **Database**: Firebase Firestore (query logging)
-- **APIs**: 
+- **APIs**:
   - Boone County ArcGIS REST API (parcel data)
   - Mapbox Geocoding API (address search)
   - Enformion API (contact data - planned)

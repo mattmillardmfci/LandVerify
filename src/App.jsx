@@ -31,6 +31,16 @@ function App() {
 	const { parcels, selectedParcelData, handleMapClick, loadParcelsForBounds, isLoading, loadingParcels } =
 		useMissouriParcels();
 
+	// Handle admin panel location clicks
+	const handleAdminLocationClick = (lat, lng, zoom = 18) => {
+		console.log("Admin clicked location:", { lat, lng, zoom });
+		setViewState({
+			latitude: lat,
+			longitude: lng,
+			zoom: zoom,
+		});
+	};
+
 	// Get user's current location on component mount
 	useEffect(() => {
 		if (navigator.geolocation) {
@@ -253,7 +263,7 @@ function App() {
 			)}
 
 			{/* Admin Panel */}
-			<AdminPanel />
+			<AdminPanel onLocationClick={handleAdminLocationClick} />
 		</div>
 	);
 }
