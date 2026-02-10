@@ -18,57 +18,17 @@ const useMissouriParcels = () => {
 
 	/**
 	 * Load all parcels for the current map viewport
+	 * DISABLED: Causes performance issues with mock data
+	 * TODO: Re-enable when real parcel data source is available
 	 */
 	const loadParcelsForBounds = useCallback(
 		async (map) => {
-			if (!map || loadingParcels) return;
-
-			try {
-				setLoadingParcels(true);
-				const bounds = map.getBounds();
-				const boundsArray = [
-					[bounds.getWest(), bounds.getSouth()],
-					[bounds.getEast(), bounds.getNorth()],
-				];
-
-				console.log("[Hook] Loading parcels for bounds:", boundsArray);
-
-				// Try both endpoint formats (Vercel uses parcels-bounds, local uses parcels/bounds)
-				const endpoints = ["/api/parcels-bounds", "/api/parcels/bounds"];
-				let response = null;
-
-				for (const endpoint of endpoints) {
-					try {
-						response = await fetch(endpoint, {
-							method: "POST",
-							headers: {
-								"Content-Type": "application/json",
-							},
-							body: JSON.stringify({ bounds: boundsArray }),
-						});
-
-						if (response.ok) {
-							break; // Found working endpoint
-						}
-					} catch (error) {
-						console.log(`[Hook] ${endpoint} failed, trying next...`);
-					}
-				}
-
-				if (response && response.ok) {
-					const geoJson = await response.json();
-					console.log(`[Hook] Loaded ${geoJson.features.length} parcels`);
-					setParcels(geoJson);
-				} else {
-					console.error("[Hook] All endpoints failed");
-				}
-			} catch (error) {
-				console.error("[Hook] Error loading parcels:", error);
-			} finally {
-				setLoadingParcels(false);
-			}
+			// DISABLED - viewport loading causes too many parcels and crashes
+			// Need real parcel data source before re-enabling
+			console.log("[Hook] Viewport parcel loading disabled - click parcels to view");
+			return;
 		},
-		[loadingParcels],
+		[],
 	);
 
 	/**

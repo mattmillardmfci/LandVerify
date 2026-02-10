@@ -142,8 +142,6 @@ function App() {
 			<Map
 				{...viewState}
 				onMove={(evt) => setViewState(evt.viewState)}
-				onLoad={(e) => loadParcelsForBounds(e.target)}
-				onMoveEnd={(e) => loadParcelsForBounds(e.target)}
 				onClick={onMapClick}
 				mapStyle="mapbox://styles/mapbox/satellite-streets-v12"
 				mapboxAccessToken={import.meta.env.VITE_MAPBOX_ACCESS_TOKEN}
