@@ -106,9 +106,9 @@ export default function AdminPanel({ onLocationClick }) {
 						</button>
 					</form>
 				) : (
-					<div className="space-y-4">
+					<div>
 						{/* Tabs */}
-						<div className="flex gap-2 border-b border-gray-700">
+						<div className="flex gap-2 border-b border-gray-700 mb-4">
 							<button
 								onClick={() => setTab("queries")}
 								className={`px-3 py-2 text-sm font-semibold transition ${
@@ -137,7 +137,7 @@ export default function AdminPanel({ onLocationClick }) {
 
 						{/* Query List */}
 						{tab === "queries" && (
-							<div className="space-y-2 max-h-64 overflow-y-auto">
+							<div className="space-y-2 max-h-64 overflow-y-auto mb-4">
 								{queries.length === 0 ? (
 									<p className="text-gray-500 text-xs">No queries yet</p>
 								) : (
@@ -164,7 +164,7 @@ export default function AdminPanel({ onLocationClick }) {
 
 						{/* Geolocation List */}
 						{tab === "geolocations" && (
-							<div className="space-y-2 max-h-64 overflow-y-auto">
+							<div className="space-y-2 max-h-64 overflow-y-auto mb-4">
 								{geolocations.length === 0 ? (
 									<p className="text-gray-500 text-xs">No geolocation data yet</p>
 								) : (
