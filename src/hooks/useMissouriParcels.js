@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { fetchParcelByCoordinates, formatParcelAsGeoJSON } from "../services/arcgisService";
+import { logQuery } from "../services/queryLogger";
 
 /**
  * Custom hook to manage Missouri parcel data
@@ -57,6 +58,19 @@ const useMissouriParcels = () => {
 
 				console.log("Setting selected parcel data:", geoJsonFeature);
 				setSelectedParcelData(geoJsonFeature);
+
+				// Log this query to Firebase
+				await logQuery({
+					lat,
+					lng,
+					address: null,
+					result: {
+						owner: geoJsonFeature.properties.OWNER,
+						acres: geoJsonFeature.properties.ACRES_CALC,
+						parcelId: geoJsonFeature.properties.PARCEL_ID,
+					},
+					source: "map_click",
+				});
 				setIsLoading(false);
 				return geoJsonFeature;
 			}

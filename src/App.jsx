@@ -3,7 +3,9 @@ import Map, { Source, Layer } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import useMissouriParcels from "./hooks/useMissouriParcels";
 import ContactCard from "./components/ContactCard";
+import AdminPanel from "./components/AdminPanel";
 import { geocodeAddress } from "./services/geocodingService";
+import { logQuery, logGeolocation } from "./services/queryLogger";
 
 // Missouri boundaries - Jefferson City center
 const MISSOURI_CENTER = {
@@ -34,8 +36,11 @@ function App() {
 			console.log("Requesting user geolocation...");
 			navigator.geolocation.getCurrentPosition(
 				(position) => {
-					const { latitude, longitude } = position.coords;
+					const { latitude, longitude, accuracy } = position.coords;
 					console.log("User location received:", { latitude, longitude });
+
+					// Log geolocation to Firebase
+					logGeolocation({ latitude, longitude, accuracy });
 
 					// Check if location is in Missouri bounds
 					const inMissouriBounds =
@@ -108,6 +113,19 @@ function App() {
 			};
 			const parcel = await handleMapClick(fakeEvent);
 			setSelectedParcel(parcel);
+
+			// Log address search to Firebase
+			await logQuery({
+				lat: result.latitude,
+				lng: result.longitude,
+				address: result.address,
+				result: parcel ? {
+					owner: parcel.properties.OWNER,
+					acres: parcel.properties.ACRES_CALC,
+					parcelId: parcel.properties.PARCEL_ID,
+				} : null,
+				source: "address_search",
+			});
 		} catch (error) {
 			console.error("Error searching address:", error);
 			alert("Error searching address. Please try again.");
@@ -213,6 +231,9 @@ function App() {
 					onClose={() => setSelectedParcel(null)}
 				/>
 			)}
+
+			{/* Admin Panel */}
+			<AdminPanel />
 		</div>
 	);
 }
