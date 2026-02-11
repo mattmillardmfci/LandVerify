@@ -3,6 +3,8 @@
  * Fetches parcel data from Boone County ArcGIS server via Vercel serverless function
  */
 
+import { addError } from "./errorTracker";
+
 /**
  * Fetch parcel data from Boone County ArcGIS REST API based on clicked coordinates
  * Uses backend proxy to avoid CORS issues
@@ -24,8 +26,19 @@ export const fetchParcelByCoordinates = async (lng, lat) => {
 		});
 
 		if (!response.ok) {
-			console.error(`Backend proxy request failed with status ${response.status}`);
-			throw new Error(`Backend proxy error: ${response.status}`);
+			const errorMsg = `Backend proxy error: ${response.status}`;
+			console.error(errorMsg);
+			addError(
+				{
+					message: `HTTP ${response.status}`,
+					status: response.status,
+				},
+				{
+					url: "/api/arcgis",
+					method: "POST",
+				}
+			);
+			throw new Error(errorMsg);
 		}
 
 		const data = await response.json();
@@ -38,6 +51,7 @@ export const fetchParcelByCoordinates = async (lng, lat) => {
 		// Provide user-friendly error messages
 		if (error.message.includes("Failed to fetch")) {
 			console.warn("Network error - unable to reach parcel service");
+			addError(error, { context: "Network connectivity" });
 		}
 
 		throw error;

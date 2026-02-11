@@ -7,6 +7,7 @@ import AdminPanel from "./components/AdminPanel";
 import DebugPanel from "./components/DebugPanel";
 import { geocodeAddress } from "./services/geocodingService";
 import { logQuery, logGeolocation } from "./services/queryLogger";
+import "./services/errorTracker"; // Initialize error tracking
 
 // Missouri boundaries - Jefferson City center
 const MISSOURI_CENTER = {
@@ -267,7 +268,12 @@ function App() {
 			<AdminPanel onLocationClick={handleAdminLocationClick} />
 
 			{/* Debug Panel */}
-			<DebugPanel viewState={viewState} selectedParcel={selectedParcel} userLocation={userLocation} isLoading={isLoading} />
+			<DebugPanel
+				viewState={viewState}
+				selectedParcel={selectedParcel}
+				userLocation={userLocation}
+				isLoading={isLoading}
+			/>
 		</div>
 	);
 }
